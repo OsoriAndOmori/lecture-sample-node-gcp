@@ -1,5 +1,5 @@
 # nginx 이미지를 사용합니다. 뒤에 tag가 없으면 latest 를 사용합니다.
-FROM nginx
+FROM nginx:1.23
 
 # root 에 app 폴더를 생성
 RUN mkdir /app
@@ -17,7 +17,7 @@ ADD ./build ./build
 RUN rm /etc/nginx/conf.d/default.conf
 
 # host pc 의 nginx.conf 를 아래 경로에 복사
-COPY ./nginx.conf /etc/nginx/conf.d
+COPY .conf/nginx.conf /etc/nginx/conf.d
 
 # 80 포트 오픈
 EXPOSE 80

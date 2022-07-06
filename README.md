@@ -1,46 +1,55 @@
-# Getting Started with Create React App
+# Tutorial : React-Three-Fiber With GCP Kubernetes Engine
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+-----------
 
-## Available Scripts
+### Get Started
+- `npm install`
+- `npm run start`
+- `http://localhost:3000/level1`
 
-In the project directory, you can run:
+------------
 
-### `npm start`
+### node 설치 & react app init
+- [nodejs link](https://nodejs.org/ko/) : 아무거나 받으면 됨
+- `npx create-react-app sample-react --template typescript`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### react 개요
+- Component 화 : View 의 재사용성 증가
+- View 와 Logic 의 혼연 일체
+- 데이터가 달라지면 DOM을 버리고 새로 그린다. 그럼 진짜 DOM tree 로 매번 비교를 함?
+  - Virtual DOM 개념.
+    <img src="https://i.imgur.com/kNKIeQZ.gif">
+  - 변하는 데이터만 그릴 수 있도록 컴포넌트 계층 설계가 중요한 편.
+  - props 와 상태 개념.
+- 간단한 코드 구경
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### [react-three-fiber](https://github.com/pmndrs/react-three-fiber)
+- `npm install three @react-three/fiber`
+- WebGL, threejs 를 react 환경에서 사용할 수 있도록 개발됨.
+- 대학교 그래픽스 과목 Unity Programming 생각하면 딱 맞음.
+- 그래픽스 지식이 있어야 딥한 개발 가능.
 
-### `npm test`
+### Docker
+- DockerFile 을 통한 빌드
+  - M1 노트북 사용하는 경우 필히 멀티 플랫폼 도커 빌드를 진행해야함.
+  - `npm run build` :  먼저 빌드 결과물 로컬에서 만들고,
+  - `docker buildx build --platform=linux/arm/v7,linux/arm64,linux/amd64,linux/386 --push -t skywhite15/playground-node:0.0.2 -f Dockerfile .`
+- DockerHub 으로 전송 : [링크](https://hub.docker.com/repository/docker/skywhite15/playground-node)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Google Cloud Platform - Kubernetes Engine
+- 어떤것도 필요없다 오직 웹브라우저 하나면 모두 가능
+  - 터미널도 웹브라우저 UI로 제공 : 잠깐 같이 구경
+  - 일반적인 k8s 스펙을 활용할 수 있다. (커스텀한 뭔가가 없음.)
+  - GUI 로 k8s 스펙을 지정하고 init 하면 5분 뒤 만들어 진다.
+- 애플리케이션 탭
+- 서비스 및 수신
+- 작업 부하
+- 최소 월 $100 가 필요하다... (치명적인 단점)
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Helm 을 통한 배포 및 인스턴스 확인
+- Google Cloud Shell 활용
+- 팀에서 쓰는 argoCD 같은걸 도입해서 자체 배포 CI/CD 만들어야 하지 않을까
+- `git clone https://github.com/OsoriAndOmori/sample-node-gcp.git`
+- `helm install sample-react .chart/`
+- `helm upgrade sample-react .chart/`
+- `helm uninstall sample-react`
