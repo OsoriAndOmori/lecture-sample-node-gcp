@@ -1,28 +1,49 @@
 import React, {useRef} from "react";
-import {useFrame} from "@react-three/fiber";
+import {useFrame, useLoader} from "@react-three/fiber";
+import {TextureLoader} from "three";
+import {MeshProps} from "@react-three/fiber/dist/declarations/src/three-types";
 
-const Earth = (props: JSX.IntrinsicElements['mesh']) => {
-    const boxRef = useRef<THREE.Mesh>(null!)
+const name = (type: string) => `texture/PavingStones092_1K_${type}.jpg`;
+
+interface EarthProps extends MeshProps {
+    rotationSpeed: number
+}
+
+const Earth = (props: EarthProps) => {
     const sphereRef = useRef<THREE.Mesh>(null!)
 
+    const [
+        colorMap,
+        displacementMap,
+        normalMap,
+        roughnessMap,
+        aoMap
+    ] = useLoader(TextureLoader, [
+        'texture/green_texture.jpg',
+        name("Displacement"),
+        name("Normal"),
+        name("Roughness"),
+        name("AmbientOcclusion")
+    ]);
+
     useFrame((state, delta) => {
-        boxRef.current.rotation.z += 0.02;
-        sphereRef.current.rotation.z += 0.02;
+        sphereRef.current.rotation.z += 0.01;
         // ref.current.rotation.y += 0.01
     })
     return (
         <>
             <mesh
-                position={[0, 0, 0]}
-                ref={boxRef}>
-                <boxGeometry args={[0.1, 3, 0.1]}/>
-                <meshStandardMaterial color={'brown'}/>
-            </mesh>
-            <mesh
                 {...props}
                 ref={sphereRef}>
-                <sphereGeometry args={[1, 100, 100]}/>
-                <meshStandardMaterial color={'green'}/>
+                <sphereGeometry args={[1.6, 100, 100]}/>
+                <meshStandardMaterial
+                    displacementScale={0.2}
+                    map={colorMap}
+                    displacementMap={displacementMap}
+                    normalMap={normalMap}
+                    roughnessMap={roughnessMap}
+                    aoMap={aoMap}
+                />
             </mesh>
         </>
 
