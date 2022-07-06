@@ -3,6 +3,7 @@
 -----------
 
 ### Get Started
+- [DEMO Link](https://bit.ly/3amR1XZ)
 - `npm install`
 - `npm run start`
 - `http://localhost:3000/level1`
@@ -36,7 +37,7 @@
   - `docker buildx build --platform=linux/arm/v7,linux/arm64,linux/amd64,linux/386 --push -t skywhite15/playground-node:0.0.2 -f Dockerfile .`
 - DockerHub 으로 전송 : [링크](https://hub.docker.com/repository/docker/skywhite15/playground-node)
 
-### Google Cloud Platform - Kubernetes Engine
+### [Google Cloud Platform - Kubernetes Engine](https://console.cloud.google.com/)
 - 어떤것도 필요없다 오직 웹브라우저 하나면 모두 가능
   - 터미널도 웹브라우저 UI로 제공 : 잠깐 같이 구경
   - 일반적인 k8s 스펙을 활용할 수 있다. (커스텀한 뭔가가 없음.)
